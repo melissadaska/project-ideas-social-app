@@ -3,34 +3,35 @@ const admin = require('firebase-admin');
 
 admin.initializeApp();
 
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-exports.helloWorld = functions.https.onRequest((request, response) => {
-  functions.logger.info("Hello logs!", {structuredData: true});
-  response.send("Hello world!");
-});
+const express = require('express');
+const app = express();
 
-exports.getProjects = functions.https.onRequest((request, response) => {  
-    admin.firestore().collection('projects').get()
+app.get('/projects', (request, response) => {
+    admin
+        .firestore()
+        .collection('projects')
+        .orderBy('createdAt', 'desc')
+        .get()
         .then(data => {
             let projects = [];
             data.foreEach(doc => {
-                projects.push(doc.data());
+                projects.push({
+                    projectId: doc.id,
+                    body: doc.data().body,
+                    userHandle: doc.data().userHandle,
+                    createdAt: doc.data().createdAt
+                });
             });
             return response.json(projects);
         })
         .catch(err => console.error(err));
-});
+})
 
-exports.createProject = functions.https.onRequest((request, response) => {
-    if (request.method !== 'POST') {
-        return response.status(400).json({ error: 'Method not allowed' });
-    }
+app.post('/project', (request, response) => {
     const newProject = {
         body: request.body.body,
         userHandle: request.body.userHandle,
-        createdAt: admin.firestore.Timestamp.fromDate(new Date())
+        createdAt: newDate().toISOString()
     };
 
     admin.firestore()
@@ -44,3 +45,7 @@ exports.createProject = functions.https.onRequest((request, response) => {
             console.error(err);
         });
 });
+
+//https://baseurl.com/api/
+// automatically turns into multiple routes
+exports.api = functions.https.onRequest(app);
