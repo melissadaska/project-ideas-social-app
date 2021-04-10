@@ -1,20 +1,33 @@
 const functions = require("firebase-functions");
 const admin = require('firebase-admin');
 
+const app = require('express')();
 admin.initializeApp();
 
-const express = require('express');
-const app = express();
+const config = {
+    apiKey: "AIzaSyBJW82790V4stvO4GGZ8E5GTWyu4mPU9Po",
+    authDomain: "project-ideas-social-app-31874.firebaseapp.com",
+    databaseURL: "https://project-ideas-social-app-31874.firebaseio.com",
+    projectId: "project-ideas-social-app-31874",
+    storageBucket: "project-ideas-social-app-31874.appspot.com",
+    messagingSenderId: "547801553785",
+    appId: "1:547801553785:web:2b1cb5928a73b7c340eda8",
+    measurementId: "G-88FHEYNYNT"
+  };
+
+const firebase = require('firebase');
+firebase.initializeApp(config);
+
+const db = admin.firestore();
 
 app.get('/projects', (request, response) => {
-    admin
-        .firestore()
+    db
         .collection('projects')
         .orderBy('createdAt', 'desc')
         .get()
         .then(data => {
             let projects = [];
-            data.foreEach(doc => {
+            data.forEach(doc => {
                 projects.push({
                     projectId: doc.id,
                     body: doc.data().body,
@@ -34,7 +47,7 @@ app.post('/project', (request, response) => {
         createdAt: newDate().toISOString()
     };
 
-    admin.firestore()
+    db
         .collection('projects')
         .add(newProject)
         .then(doc => {
@@ -46,6 +59,52 @@ app.post('/project', (request, response) => {
         });
 });
 
-//https://baseurl.com/api/
+app.post('/signup', (request, response) => {
+    const newUser = {
+        email: request.body.email,
+        password: request.body.password,
+        confirmPassword: request.body.confirmPassword,
+        handle: request.body.handle,
+    };
+
+    let token, userId;
+    db.doc(`/users/${newUser.handle}`).get()
+    .then(doc => {
+        if(doc.exists) {
+            return response.status(400).json({ handle: 'this handle is already taken' });
+        } else {
+            return firebase
+            .auth()
+            .createUserWithEmailAndPassword(newUser.email, newUser.password);
+        }
+    })
+    .then(data => {
+        userId = data.user.uid;
+        return data.user.getIdToken();
+    })
+    .then(idToken => {
+        token = idToken;
+        const userCredentials = {
+            handle: newUser.handle, 
+            email: newUser.email,
+            createdAt: new Date().toISOString(),
+            userId
+        };
+        return db.doc(`/users/${newUser.handle}`).set(userCredentials);
+    })
+    .then((data) => {
+        return response.status(201).json({ token });
+    })
+    .catch(err => {
+        console.error(err);
+        if(err.code === 'auth/email-already-in-use') {
+            return response.status(400).json({ email: `Email is already in use`})
+        } else {
+            return response.status(500).json({ error: err.code });
+        }
+    })
+});
+
+
 // automatically turns into multiple routes
-exports.api = functions.https.onRequest(app);
+exports.api = functions.region('us-central1').https.onRequest(app);
