@@ -1,4 +1,4 @@
-const { admin } = require('./admin');
+const { admin, db } = require('./admin');
 
 // Check auth token to see if user has logged in
 module.exports = (request, response, next) => {
