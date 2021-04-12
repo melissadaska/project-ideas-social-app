@@ -4,6 +4,8 @@ const app = require('express')();
 
 const FbAuth = require('./util/FbAuth');
 
+const { db } = require('./util/admin');
+
 const { getAllProjects, postOneProject } = require('./handlers/projects');
 const { signup, login, uploadImage } = require('./handlers/users');
 
@@ -18,7 +20,7 @@ app.post('/project', FbAuth, postOneProject);
 // User routes
 app.post('/signup', signup);
 app.post('/login', login);
-app.post('./user/image', FbAuth, uploadImage)
+app.post('/user/image', FbAuth, uploadImage);
 
 // automatically turns into multiple routes
 exports.api = functions.region('us-central1').https.onRequest(app);
