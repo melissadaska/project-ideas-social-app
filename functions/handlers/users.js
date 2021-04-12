@@ -6,6 +6,7 @@ const firebase = require('firebase');
 firebase.initializeApp(config);
 
 const { validateSignUpData, validateLoginData } = require('../util/validators');
+const { response } = require('express');
 
 exports.signup = (request, response) => {
     const newUser = {
@@ -104,6 +105,9 @@ exports.uploadImage = (req, res) => {
     let imageFileName;
   
     busboy.on("file", (fieldname, file, filename, encoding, mimetype) => {
+      if(mimetype !== 'image/jpeg' && mimetype !== 'image//png') {
+        return response.status(400).json({ error: 'Wrong file type submitted '});
+      }
       console.log(fieldname, file, filename, encoding, mimetype);
       if (mimetype !== "image/jpeg" && mimetype !== "image/png") {
         return res.status(400).json({ error: "Wrong file type submitted" });
@@ -129,7 +133,7 @@ exports.uploadImage = (req, res) => {
               contentType: imageToBeUploaded.mimetype,
             },
           },
-        })
+        }) 
         .then(() => {
           // Append token to url
           const imageUrl = `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/${imageFileName}?alt=media`;
