@@ -1,23 +1,47 @@
 let db = {
     users: [
         {
-            userId: '',
-            email: '',
-            handle: '',
-            createdAt: '',
+            userId: '29duqLO9bNZY8rtpdTZ2L5ewAf63',
+            email: 'user@email.com',
+            handle: 'user',
+            createdAt: '2021-04-10T13:53:01.302Z',
             imageUrl: '',
-            bio: '',
-            website: '',
-            location: ''
+            bio: 'Hello, my name is user. Nice to meet you.',
+            website: 'https://user.com',
+            location: 'Austin, TX'
         }
     ],
     projects: [
         {
-            userHandle: '',
-            body: '',
-            createdAt: '',
+            userHandle: 'user',
+            body: 'This is a sample project.',
+            createdAt: '2021-04-12T08:52:52.7982',
             likeCount: 10,
             commentCount: 5
         }
     ]
 };
+
+const userDetails = {
+    // Redux data
+    credentials: {
+        userId: '29duqLO9bNZY8rtpdTZ2L5ewAf63',
+        email: 'user@email.com',
+        handle: 'user',
+        createdAt: '2021-04-10T13:53:01.302Z',
+        imageUrl: 'image/whoefhawoefhweioghaeiwohg',
+        bio: 'Hello, my name is user. Nice to meet you.',
+        website: 'https://user.com',
+        location: 'Austin, TX'
+    },
+    likes: [
+        {
+            userHandle: 'user',
+            projectId: ''
+        },
+        {
+            userHandle: 'user',
+            projectId: ''
+        }
+    ]
+}

@@ -7,6 +7,7 @@ firebase.initializeApp(config);
 
 const { validateSignUpData, validateLoginData, reduceUserDetails } = require('../util/validators');
 const { response } = require('express');
+const { UserRecordMetadata } = require('firebase-functions/lib/providers/auth');
 
 exports.signup = (request, response) => {
     const newUser = {
@@ -106,6 +107,29 @@ exports.addUserDetails = (request, response) => {
             return response.status(500).json({ error: err.code });
         });
 };
+
+// get own user details
+exports.getAuthUser = (request, response ) => {
+    let userData = {};
+    db.doc(`/users/${request.user.handle}`).get()
+        .then(doc => {
+            if(doc.exists){
+                userData.credentials = doc.data();
+                return db.collection('likes').where('userHandle', '==', request.user.handle).get()
+            }
+        })
+        .then(data => {
+            userData.likes = [];
+            data.forEach(doc => {
+                userData.likes.push(doc.data());
+            });
+            return response.json(userData);
+        })
+        .catch(err => {
+            console.error(err);
+            return response.status(500).json({ error: err.code });
+        })
+}
 
 // upload profile mage
 exports.uploadImage = (req, res) => {

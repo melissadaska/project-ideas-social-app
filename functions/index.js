@@ -7,7 +7,7 @@ const FbAuth = require('./util/FbAuth');
 const { db } = require('./util/admin');
 
 const { getAllProjects, postOneProject } = require('./handlers/projects');
-const { signup, login, uploadImage, addUserDetails } = require('./handlers/users');
+const { signup, login, uploadImage, addUserDetails, getAuthUser } = require('./handlers/users');
 
 // Project routes
 
@@ -22,6 +22,7 @@ app.post('/signup', signup);
 app.post('/login', login);
 app.post('/user/image', FbAuth, uploadImage);
 app.post('/user', FbAuth, addUserDetails);
+app.get('/user', FbAuth, getAuthUser)
 
 // automatically turns into multiple routes
 exports.api = functions.region('us-central1').https.onRequest(app);
