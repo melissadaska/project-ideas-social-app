@@ -5,7 +5,7 @@ const isEmail = (email) => {
 }
 
 const isEmpty = (string) => {
-    if(string.trim() === '') return true;
+    if(string === '') return true;
     else return false;
 };
 
@@ -28,7 +28,7 @@ exports.validateSignUpData = (data) => {
         errors,
         valid: Object.keys(errors).length === 0 ? true : false
     }
-}
+};
 
 exports.validateLoginData = (data) => {
     let errors = {};
@@ -43,4 +43,18 @@ exports.validateLoginData = (data) => {
         errors,
         valid: Object.keys(errors).length === 0 ? true : false
     }
-}
+};
+
+exports.reduceUserDetails = (data) => {
+    let userDetails = {};
+
+    if(!isEmpty(data.bio)) userDetails.bio = data.bio;
+    if(!isEmpty(data.website)){
+        if(data.website.substring(0, 4) !== 'http'){
+            userDetails.website = `https://${data.website}`;
+        } else userDetails.website = data.website;
+    }
+    if(!isEmpty(data.location)) userDetails.location = data.location;
+
+    return userDetails;
+};
