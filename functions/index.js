@@ -6,7 +6,7 @@ const FbAuth = require('./util/FbAuth');
 
 const { db } = require('./util/admin');
 
-const { getAllProjects, postOneProject, getProject, commentOnProject } = require('./handlers/projects');
+const { getAllProjects, postOneProject, getProject, commentOnProject, likeProject, unlikeProject } = require('./handlers/projects');
 const { signup, login, uploadImage, addUserDetails, getAuthUser } = require('./handlers/users');
 
 // Project routes
@@ -21,9 +21,11 @@ app.get('/project/:projectId', getProject);
 
 // DELETE Project
 
-// Like a Project
+// // Like a Project
+app.get('/project/:projectId/like', FbAuth, likeProject);
 
-// Unlike a Project
+// // Unlike a Project
+// app.get('/project/:projectId/unlike', FbAuth, unlikeProject);
 
 // Comment on Project
 app.post('/project/:projectId/comment', FbAuth, commentOnProject);
