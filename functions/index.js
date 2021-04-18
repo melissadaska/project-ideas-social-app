@@ -8,6 +8,7 @@ const { db } = require('./util/admin');
 
 const { getAllProjects, postOneProject, getProject, commentOnProject, likeProject, unlikeProject, deleteProject } = require('./handlers/projects');
 const { signup, login, uploadImage, addUserDetails, getAuthUser } = require('./handlers/users');
+const { unstable_renderSubtreeIntoContainer } = require("react-dom");
 
 // Project routes
 
@@ -40,3 +41,52 @@ app.get('/user', FbAuth, getAuthUser)
 
 // automatically turns into multiple routes
 exports.api = functions.region('us-central1').https.onRequest(app);
+
+exports.createNotificationOnLike = functions.region('us-central1').firestore.document('likes/{id}')
+    .onCreate((snapshot) => {
+        db.doc(`/projects/${snapshot.data().projectId}`).get()
+        .then(doc => {
+            if(doc.exists) {
+                return db.doc(`/notifications/${shapshot.id}`).set({
+                    createdAt: new Date().ISOSTtring(),
+                    recipient: doc.data().userHandle,
+                    sender: snapshot.data().userHandle,
+                    type: 'like',
+                    read: false,
+                    projectId: doc.id
+                });
+            }
+        })
+        .then(() => {
+            return;
+        })
+        .catch(err => {
+            console.error(err);
+            return;
+        });
+    });
+
+exports.createNotificationOnComment = functions.region('us-central1').firestore.document('comments/{id}')
+    .onCreate((snapshot) => {
+        db.doc(`/projects/${snapshot.data().projectId}`).get()
+        .then(doc => {
+            if(doc.exists) {
+                return db.doc(`/notifications/${shapshot.id}`).set({
+                    createdAt: new Date().ISOSTtring(),
+                    recipient: doc.data().userHandle,
+                    sender: snapshot.data().userHandle,
+                    type: 'comment',
+                    read: false,
+                    projectId: doc.id
+                });
+            }
+        })
+        .then(() => {
+            return;
+        })
+        .catch(err => {
+            console.error(err);
+            return;
+        });
+    });
+

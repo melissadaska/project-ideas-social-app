@@ -27,6 +27,16 @@ let db = {
             body: 'That is a good one!',
             createdAt: '2021-03-15T08:28:52.7952'
         }
+    ],
+    notifications: [
+        {
+            recipient: 'user',
+            sender: 'melissa',
+            read: 'true | false',
+            projectId: 'ioehgoiwhgouewho',
+            type: 'like | comment',
+            createdAt: '2021-04-18T10:59:52.7982'
+        }
     ]
 };
 
