@@ -41,4 +41,46 @@ exports.postOneProject = (request, response) => {
             response.status(500).json({error: 'something went wrong'});
             console.error(err);
         });
+};
+
+// fetch one Project
+exports.getProject = (request, response ) => {
+    let projectData = {};
+    db.doc(`/projects/${request.params.projectId}`).get()
+    .then( doc => {
+        if(!doc.exists) {
+            return response.status(404).json({ error: 'Project not found'})
+        }
+        projectData = doc.data();
+        projectData.projectId = doc.id;
+        return db
+            .collection('comments')
+            .orderBy('createdAt', 'desc')
+            .where('projectId', '==', request.params.projectId)
+            .get();
+        })
+        .then((data) => {
+            projectData.comments = [];
+            data.forEach((doc) => {
+                projectData.comments.push(doc.data());
+        });
+        return response.json(projectData);
+    })
+    .catch(err => {
+        console.error(err);
+        response.status(500).json({ error: err.code });
+    });
+};
+
+// Comment on a project
+exports.commentOnProject = (request, response) => {
+    if(request.body.body === '') return response.status(400).json({ error: 'Comment must not be empty' });
+
+    const newComment = {
+        body: request.body.body,
+        createdAt: new Date().toISOString(),
+        projectId: request.params.projectId,
+        userHandle: request.user.handle,
+        userImage: request.user.imageUrl
+    };
 }

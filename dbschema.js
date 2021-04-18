@@ -19,6 +19,14 @@ let db = {
             likeCount: 10,
             commentCount: 5
         }
+    ],
+    comments: [
+        {
+            userHandle: 'user',
+            projectId: 'oihewgoweghoweg',
+            body: 'That is a good one!',
+            createdAt: '2021-03-15T08:28:52.7952'
+        }
     ]
 };
 
