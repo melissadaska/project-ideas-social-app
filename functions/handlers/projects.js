@@ -98,6 +98,7 @@ exports.getProject = (request, response) => {
         if (!doc.exists) {
           return response.status(404).json({ error: 'Project not found' });
         }
+        return doc.ref.update({ commentCount: doc.data().commentCount + 1 });
       })
       .then(() => {
         return db
@@ -120,7 +121,7 @@ exports.getProject = (request, response) => {
 
         const projectDoc = db.doc(`/projects/${request.params.projectId}`);
 
-        letProjectData;
+        let projectData;
 
         projectDoc.get()
         .then(doc => {
@@ -140,7 +141,7 @@ exports.getProject = (request, response) => {
                 })
                 .then(() => {
                     projectData.likeCount++
-                    return projectDoc.update({ likecount: projectData.likeCount })
+                    return projectDoc.update({ likeCount: projectData.likeCount })
                 })
                 .then(() => {
                     return response.json(projectData);
@@ -152,4 +153,48 @@ exports.getProject = (request, response) => {
         .catch(err => {
             response.status(500).json({ error: err.code });
         });
+  };
+
+  exports.unlikeProject = (request, response) => {
+    const likeDocument = db
+      .collection('likes')
+      .where('userHandle', '==', request.user.handle)
+      .where('projectId', '==', request.params.projectId)
+      .limit(1);
+  
+    const projectDocument = db.doc(`/projects/${request.params.projectId}`);
+  
+    let projectData;
+  
+    projectDocument
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+            projectData = doc.data();
+            projectData.projectId = doc.id;
+          return likeDocument.get();
+        } else {
+          return response.status(404).json({ error: 'Scream not found' });
+        }
+      })
+      .then((data) => {
+        if (data.empty) {
+          return res.status(400).json({ error: 'Scream not liked' });
+        } else {
+          return db
+            .doc(`/likes/${data.docs[0].id}`)
+            .delete()
+            .then(() => {
+                projectData.likeCount--;
+              return projectDocument.update({ likeCount: projectData.likeCount });
+            })
+            .then(() => {
+                response.json(projectData);
+            });
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        response.status(500).json({ error: err.code });
+      });
   };

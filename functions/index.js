@@ -25,7 +25,7 @@ app.get('/project/:projectId', getProject);
 app.get('/project/:projectId/like', FbAuth, likeProject);
 
 // // Unlike a Project
-// app.get('/project/:projectId/unlike', FbAuth, unlikeProject);
+app.get('/project/:projectId/unlike', FbAuth, unlikeProject);
 
 // Comment on Project
 app.post('/project/:projectId/comment', FbAuth, commentOnProject);
