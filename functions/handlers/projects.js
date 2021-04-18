@@ -198,3 +198,26 @@ exports.getProject = (request, response) => {
         response.status(500).json({ error: err.code });
       });
   };
+
+  // Delete project
+  exports.deleteProject = (request, response) => {
+      const document = db.doc(`/projects/${request.params.projectId}`);
+      document.get()
+      .then(doc => {
+          if(!doc.exists){
+              return response.status(404).json({ error: 'Project not found' })
+          }
+          if(doc.data().userHandle !== request.user.handle){
+              return response.status(403).json({ error: 'Unauthorized to delete this project' })
+          } else {
+              return document.delete();
+          }
+      })
+      .then(() => {
+          response.json({ message: 'Project deleted successfully' })
+      })
+      .catch(err => {
+          console.error(err);
+          return response.status(500).json({ error: err.code });
+      });
+  };
