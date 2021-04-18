@@ -6,7 +6,7 @@ const FbAuth = require('./util/FbAuth');
 
 const { db } = require('./util/admin');
 
-const { getAllProjects, postOneProject, getProject, commentOnPost } = require('./handlers/projects');
+const { getAllProjects, postOneProject, getProject, commentOnProject } = require('./handlers/projects');
 const { signup, login, uploadImage, addUserDetails, getAuthUser } = require('./handlers/users');
 
 // Project routes
@@ -26,7 +26,7 @@ app.get('/project/:projectId', getProject);
 // Unlike a Project
 
 // Comment on Project
-app.post('/project/:projectId/comment', FBAuth, commentOnPost);
+app.post('/project/:projectId/comment', FbAuth, commentOnProject);
 
 // USER routes
 app.post('/signup', signup);

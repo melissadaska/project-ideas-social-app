@@ -18,7 +18,7 @@ exports.getAllProjects = (request, response) => {
             return response.json(projects);
         })
         .catch(err => console.error(err));
-}
+};
 
 exports.postOneProject = (request, response) => {
     if (request.body.body.trim() === '') {
@@ -43,44 +43,67 @@ exports.postOneProject = (request, response) => {
         });
 };
 
-// fetch one Project
-exports.getProject = (request, response ) => {
+// Fetch one project
+exports.getProject = (request, response) => {
     let projectData = {};
-    db.doc(`/projects/${request.params.projectId}`).get()
-    .then( doc => {
-        if(!doc.exists) {
-            return response.status(404).json({ error: 'Project not found'})
+    db.doc(`/projects/${request.params.projectId}`)
+      .get()
+      .then((doc) => {
+        if (!doc.exists) {
+          return response.status(404).json({ error: 'Project not found' });
         }
         projectData = doc.data();
         projectData.projectId = doc.id;
         return db
-            .collection('comments')
-            .orderBy('createdAt', 'desc')
-            .where('projectId', '==', request.params.projectId)
-            .get();
-        })
-        .then((data) => {
-            projectData.comments = [];
-            data.forEach((doc) => {
-                projectData.comments.push(doc.data());
+          .collection('comments')
+          .orderBy('createdAt', 'desc')
+          .where('projectId', '==', request.params.projectId)
+          .get();
+      })
+      .then((data) => {
+        projectData.comments = [];
+        data.forEach((doc) => {
+            projectData.comments.push(doc.data());
         });
         return response.json(projectData);
-    })
-    .catch(err => {
+      })
+      .catch((err) => {
         console.error(err);
         response.status(500).json({ error: err.code });
-    });
-};
+      });
+  };
 
-// Comment on a project
-exports.commentOnProject = (request, response) => {
-    if(request.body.body === '') return response.status(400).json({ error: 'Comment must not be empty' });
-
+  // Comment on a comment
+  exports.commentOnProject = (request, response) => {
+    if (request.body.body.trim() === '')
+      return response.status(400).json({ comment: 'Must not be empty' });
+  
     const newComment = {
-        body: request.body.body,
-        createdAt: new Date().toISOString(),
-        projectId: request.params.projectId,
-        userHandle: request.user.handle,
-        userImage: request.user.imageUrl
+      body: request.body.body,
+      createdAt: new Date().toISOString(),
+      projectId: request.params.projectId,
+      userHandle: request.user.handle,
+      userImage: request.user.imageUrl
     };
-}
+    console.log(newComment);
+  
+    db.doc(`/projects/${request.params.projectId}`)
+      .get()
+      .then((doc) => {
+        if (!doc.exists) {
+          return response.status(404).json({ error: 'Project not found' });
+        }
+      })
+      .then(() => {
+        return db
+        .collection('comments')
+        .add(newComment);
+      })
+      .then(() => {
+        response.json(newComment);
+      })
+      .catch((err) => {
+        console.log(err);
+        response.status(500).json({ error: 'Something went wrong' });
+      });
+  };
