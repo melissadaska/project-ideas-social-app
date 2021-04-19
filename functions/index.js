@@ -7,7 +7,7 @@ const FbAuth = require('./util/FbAuth');
 const { db } = require('./util/admin');
 
 const { getAllProjects, postOneProject, getProject, commentOnProject, likeProject, unlikeProject, deleteProject } = require('./handlers/projects');
-const { signup, login, uploadImage, addUserDetails, getAuthUser } = require('./handlers/users');
+const { signup, login, uploadImage, addUserDetails, getAuthUser, getUserDetails, markNotificationsRead } = require('./handlers/users');
 const { unstable_renderSubtreeIntoContainer } = require("react-dom");
 
 // Project routes
@@ -38,6 +38,8 @@ app.post('/login', login);
 app.post('/user/image', FbAuth, uploadImage);
 app.post('/user', FbAuth, addUserDetails);
 app.get('/user', FbAuth, getAuthUser)
+app.get('/user/:handle', getUserDetails);
+app.post('/notifications', FbAuth, markNotificationsRead);
 
 // automatically turns into multiple routes
 exports.api = functions.region('us-central1').https.onRequest(app);
