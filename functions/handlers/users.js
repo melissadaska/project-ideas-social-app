@@ -8,6 +8,7 @@ firebase.initializeApp(config);
 const { validateSignUpData, validateLoginData, reduceUserDetails } = require('../util/validators');
 const { response } = require('express');
 const { UserRecordMetadata } = require('firebase-functions/lib/providers/auth');
+const { SSL_OP_SSLREF2_REUSE_CERT_TYPE_BUG } = require('constants');
 
 exports.signup = (request, response) => {
     const newUser = {
@@ -123,8 +124,24 @@ exports.getAuthUser = (request, response ) => {
             data.forEach(doc => {
                 userData.likes.push(doc.data());
             });
-            return response.json(userData);
+            return db.collection('notifications').where('recipient', '==', request.user.handle)
+            .orderBy('createdAt','desc').limit(10).get();
         })
+        .then ((data) => {
+            userData.notifications = [];
+            data.forEach((doc) => {
+                userData.notifications.push({
+                    recipient: doc.data().recipient,
+                    sender: doc.data().sender,
+                    createdAt: doc.data().createdAt,
+                    projectId: doc.data().projectId,
+                    type: doc.data().type,
+                    read: doc.data().read,
+                    notificationId: doc.id
+                });
+        });
+            return response.json(userData);
+    })
         .catch(err => {
             console.error(err);
             return response.status(500).json({ error: err.code });
