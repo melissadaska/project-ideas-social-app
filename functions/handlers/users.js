@@ -7,8 +7,8 @@ firebase.initializeApp(config);
 
 const { validateSignUpData, validateLoginData, reduceUserDetails } = require('../util/validators');
 const { response } = require('express');
-const { UserRecordMetadata } = require('firebase-functions/lib/providers/auth');
-const { SSL_OP_SSLREF2_REUSE_CERT_TYPE_BUG } = require('constants');
+// const { UserRecordMetadata } = require('firebase-functions/lib/providers/auth');
+// const { SSL_OP_SSLREF2_REUSE_CERT_TYPE_BUG } = require('constants');
 
 exports.signup = (request, response) => {
     const newUser = {
@@ -110,20 +110,20 @@ exports.addUserDetails = (request, response) => {
 };
 
 //Get any user's details
-exports.getUserDetails = (req, res) => {
+exports.getUserDetails = (request, response) => {
     let userData = {};
-    db.doc(`/users/${req.params.handle}`)
+    db.doc(`/users/${request.params.handle}`)
       .get()
       .then((doc) => {
         if (doc.exists) {
           userData.user = doc.data();
           return db
             .collection("project")
-            .where("userHandle", "==", req.params.handle)
+            .where("userHandle", "==", request.params.handle)
             .orderBy("createdAt", "desc")
             .get();
         } else {
-          return res.status(404).json({ errror: "User not found" });
+          return response.status(404).json({ errror: "User not found" });
         }
       })
       .then((data) => {
