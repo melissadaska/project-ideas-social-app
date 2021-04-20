@@ -12,7 +12,10 @@ exports.getAllProjects = (request, response) => {
                     projectId: doc.id,
                     body: doc.data().body,
                     userHandle: doc.data().userHandle,
-                    createdAt: doc.data().createdAt
+                    createdAt: doc.data().createdAt,
+                    commentCount: doc.data().commentCount,
+                    likeCount: doc.data().likeCount,
+                    userImage: doc.data().userImage
                 });
             });
             return response.json(projects);
@@ -81,7 +84,7 @@ exports.getProject = (request, response) => {
   // Comment on a comment
   exports.commentOnProject = (request, response) => {
     if (request.body.body.trim() === '')
-      return response.status(400).json({ comment: 'Must not be empty' });
+      return response.status(400).json({ comment: 'Comment must not be empty' });
   
     const newComment = {
       body: request.body.body,

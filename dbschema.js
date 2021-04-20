@@ -1,65 +1,64 @@
 let db = {
     users: [
-        {
-            userId: '29duqLO9bNZY8rtpdTZ2L5ewAf63',
-            email: 'user@email.com',
-            handle: 'user',
-            createdAt: '2021-04-10T13:53:01.302Z',
-            imageUrl: '',
-            bio: 'Hello, my name is user. Nice to meet you.',
-            website: 'https://user.com',
-            location: 'Austin, TX'
-        }
-    ],
-    projects: [
-        {
-            userHandle: 'user',
-            body: 'This is a sample project.',
-            createdAt: '2021-04-12T08:52:52.7982',
-            likeCount: 10,
-            commentCount: 5
-        }
-    ],
-    comments: [
-        {
-            userHandle: 'user',
-            projectId: 'oihewgoweghoweg',
-            body: 'That is a good one!',
-            createdAt: '2021-03-15T08:28:52.7952'
-        }
-    ],
-    notifications: [
-        {
-            recipient: 'user',
-            sender: 'melissa',
-            read: 'true | false',
-            projectId: 'ioehgoiwhgouewho',
-            type: 'like | comment',
-            createdAt: '2021-04-18T10:59:52.7982'
-        }
-    ]
-};
-
-const userDetails = {
-    // Redux data
-    credentials: {
-        userId: '29duqLO9bNZY8rtpdTZ2L5ewAf63',
+      {
+        userId: 'dh23ggj5h32g543j5gf43',
         email: 'user@email.com',
         handle: 'user',
-        createdAt: '2021-04-10T13:53:01.302Z',
-        imageUrl: 'image/whoefhawoefhweioghaeiwohg',
-        bio: 'Hello, my name is user. Nice to meet you.',
+        createdAt: '2021-04-15T08:30:52.798Z',
+        imageUrl: 'image/dsfsdkfghskdfgs/dgfdhfgdh',
+        bio: 'Hello. My name is User. It is nice to meet you.',
         website: 'https://user.com',
         location: 'Austin, TX'
+      }
+    ],
+    projects: [
+      {
+        userHandle: 'user',
+        body: 'Here is a sample project',
+        createdAt: '2021-04-15T08:30:52.798Z',
+        likeCount: 10,
+        commentCount: 5
+      }
+    ],
+    comments: [
+      {
+        userHandle: 'user',
+        projectId: 'kdjsfgdksuufhgkdsufky',
+        body: 'Nice project idea!',
+        createdAt: '2021-04-15T08:30:52.798Z'
+      }
+    ],
+    notifications: [
+      {
+        recipient: 'user',
+        sender: 'john',
+        read: 'true | false',
+        projectId: 'kdjsfgdksuufhgkdsufky',
+        type: 'like | comment',
+        createdAt: '2021-04-15T08:30:52.798Z'
+      }
+    ]
+  };
+  const userDetails = {
+    // Redux data
+    credentials: {
+      userId: 'N43KJ5H43KJHREW4J5H3JWMERHB',
+      email: 'user@email.com',
+      handle: 'user',
+      createdAt: '2021-04-15T08:30:52.798Z',
+      imageUrl: 'image/dsfsdkfghskdfgs/dgfdhfgdh',
+      bio: 'Hello. My name is User. It is nice to meet you.',
+      website: 'https://user.com',
+      location: 'Austin, TX'
     },
     likes: [
-        {
-            userHandle: 'user',
-            projectId: ''
-        },
-        {
-            userHandle: 'user',
-            projectId: ''
-        }
+      {
+        userHandle: 'user',
+        projectId: 'hh7O5oWfWucVzGbHH2pa'
+      },
+      {
+        userHandle: 'user',
+        projectId: '3IOnFoQexRcofs5OhBXO'
+      }
     ]
-}
+  };
