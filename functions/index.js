@@ -142,7 +142,7 @@ exports.onProjectDelete = functions
       .where('projectId', '==', projectId)
       .get()
       .then((data) => {
-        data.forEach((doc) => {
+        data.forEach((doc) => { 
           batch.delete(db.doc(`/comments/${doc.id}`));
         });
         return db
