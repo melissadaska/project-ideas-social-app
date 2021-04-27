@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
 
+import Project from '../components/Project';
+
 class home extends Component {
     state = {
         projects: null
@@ -18,7 +20,7 @@ class home extends Component {
   }
   render() {
     let recentProjectsMarkup = this.state.projects ? (
-        this.state.projects.map(project => <p>{project.body}</p>)
+        this.state.projects.map((project) =>  <Project project={project}/>)
     ) : <p>Loading...</p>
     return (
       <Grid container spacing={10}>
