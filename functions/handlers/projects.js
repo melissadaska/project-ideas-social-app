@@ -31,7 +31,7 @@ exports.postOneProject = (request, response) => {
     const newProject = {
         body: request.body.body,
         userHandle: request.user.handle,
-        // userImage: request.user.imageUrl,
+        userImage: request.user.imageUrl,
         createdAt: new Date().toISOString(),
         likeCount: 0,
         commentCount: 0
@@ -91,7 +91,7 @@ exports.getProject = (request, response) => {
       createdAt: new Date().toISOString(),
       projectId: request.params.projectId,
       userHandle: request.user.handle,
-      // userImage: request.user.imageUrl
+      userImage: request.user.imageUrl
     };
     console.log(newComment);
   

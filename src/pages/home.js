@@ -20,7 +20,7 @@ class home extends Component {
   }
   render() {
     let recentProjectsMarkup = this.state.projects ? (
-        this.state.projects.map((project) =>  <Project project={project}/>)
+        this.state.projects.map((project) =>  <Project key={project.projectId} project={project}/>)
     ) : <p>Loading...</p>
     return (
       <Grid container spacing={10}>
