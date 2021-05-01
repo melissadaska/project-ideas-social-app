@@ -26,7 +26,7 @@ exports.signup = (request, response) => {
 
     let token, userId;
     db.doc(`/users/${newUser.handle}`).get()
-    .then(doc => {
+    .then((doc) => {
         if(doc.exists) {
             return response.status(400).json({ handle: 'this handle is already taken' });
         } else {
@@ -35,7 +35,7 @@ exports.signup = (request, response) => {
             .createUserWithEmailAndPassword(newUser.email, newUser.password);
         }
     })
-    .then(data => {
+    .then((data) => {
         userId = data.user.uid;
         return data.user.getIdToken();
     })
@@ -50,7 +50,7 @@ exports.signup = (request, response) => {
         };
         return db.doc(`/users/${newUser.handle}`).set(userCredentials);
     })
-    .then((data) => {
+    .then(() => {
         return response.status(201).json({ token });
     })
     .catch(err => {
@@ -60,8 +60,8 @@ exports.signup = (request, response) => {
         } else {
             return response.status(500).json({ general: 'Something went wrong, please try again.' });
         }
-    })
-}
+    });
+};
 
 exports.login = (request, response) => {
     const user = {
