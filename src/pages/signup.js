@@ -45,7 +45,7 @@ export class signup extends Component {
             password: '',
             confirmPassword: '',
             handle: '',
-            error: {}
+            errors: {}
         }
  }
  
@@ -101,8 +101,8 @@ export class signup extends Component {
                     type="email"
                     label="Email"
                     className={classes.textField}
-                    // helperText={errors.email}
-                    // error={errors.email ? true : false}
+                    helperText={errors.email}
+                    error={errors.email ? true : false}
                     value={this.state.email}
                     onChange={this.handleChange}
                     fullWidth
@@ -113,8 +113,8 @@ export class signup extends Component {
                     type="password"
                     label="Password"
                     className={classes.textField}
-                    // helperText={errors.password}
-                    // error={errors.password ? true : false}
+                    helperText={errors.password}
+                    error={errors.password ? true : false}
                     value={this.state.password}
                     onChange={this.handleChange}
                     fullWidth
@@ -125,8 +125,8 @@ export class signup extends Component {
                     type="password"
                     label="Confirm Password"
                     className={classes.textField}
-                    // helperText={errors.confirmPassword}
-                    // error={errors.confirmPassword ? true : false}
+                    helperText={errors.confirmPassword}
+                    error={errors.confirmPassword ? true : false}
                     value={this.state.confirmPassword}
                     onChange={this.handleChange}
                     fullWidth
@@ -137,17 +137,17 @@ export class signup extends Component {
                     type="text"
                     label="Handle"
                     className={classes.textField}
-                    // helperText={errors.handle}
-                    // error={errors.handle ? true : false}
+                    helperText={errors.handle}
+                    error={errors.handle ? true : false}
                     value={this.state.handle}
                     onChange={this.handleChange}
                     fullWidth
                   />
-                  {/* {errors.general && (
+                  {errors.general && (
                     <Typography variant="body2" className={classes.customError}>
                       {errors.general}
                     </Typography>
-                  )} */}
+                  )}
                   <Button
                     type="submit"
                     variant="contained"

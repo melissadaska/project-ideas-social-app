@@ -26,7 +26,18 @@ const styles = {
 export class Project extends Component {
     render() {
         dayjs.extend(relativeTime)
-        const { classes, project : { body, createdAt, userImage, userHandle, projectId, likeCount, commentCount } } = this.props
+        const { 
+            classes, 
+            project: { 
+                body, 
+                createdAt, 
+                userImage, 
+                userHandle, 
+                // projectId, 
+                // likeCount, 
+                // commentCount 
+            } 
+        } = this.props;
         return (
             <Card className={classes.card}>
                 <CardMedia 

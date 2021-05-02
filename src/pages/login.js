@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
-import propTypes from 'prop-types';
-import axios from 'axios';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
+//Material UI
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+// Redux
 import { connect } from 'react-redux';
 import { loginUser } from '../redux/actions/userActions';
 
@@ -40,16 +41,21 @@ const styles = ({
       }
 })
 
-export class login extends Component {
+class login extends Component {
     constructor() {
         super();
         this.state = {
             email: '',
             password: '',
-            error: {}
-        }
+            errors: {}
+        };
  }
- 
+
+ componentWillReceiveProps(nextProps) {
+     if(nextProps.UI.errors){
+         this.setState({errors: nextProps.UI.errors});
+     }
+ }
 
  handleSubmit = (event) => {
     event.preventDefault();
@@ -64,7 +70,7 @@ export class login extends Component {
     this.setState({
         [event.target.name]: event.target.value
     });
- }
+ };
 
  render() {
         const { classes, UI: {loading} } = this.props;
@@ -83,8 +89,8 @@ export class login extends Component {
                     type='email' 
                     label='Email' 
                     className={classes.textField} 
-                    // helperText={errors.email}
-                    // error={errors.email ? true : false}
+                    helperText={errors.email}
+                    error={errors.email ? true : false}
                     value={this.state.email} 
                     onChange={this.handleChange} 
                     fullWidth 
@@ -95,17 +101,17 @@ export class login extends Component {
                     type='password' 
                     label='Password' 
                     className={classes.textField} 
-                    // helperText={errors.password}
-                    // error={errors.password ? true : false}
+                    helperText={errors.password}
+                    error={errors.password ? true : false}
                     value={this.state.password} 
                     onChange={this.handleChange} 
                     fullWidth />
 
-                    {/* {errors.general && 
+                    {errors.general && 
                         <Typography variant='body2' className={classes.customError}>
                             {errors.general}
                         </Typography>
-                    } */}
+                    }
 
                     <Button 
                     type='submit' 
@@ -131,10 +137,10 @@ export class login extends Component {
 }
 
 login.propTypes = {
-    classes: propTypes.object.isRequired,
-    loginUser: propTypes.func.isRequired,
-    user: propTypes.object.isRequired,
-    UI: propTypes.object.isRequired
+    classes: PropTypes.object.isRequired,
+    loginUser: PropTypes.func.isRequired,
+    user: PropTypes.object.isRequired,
+    UI: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -144,6 +150,6 @@ const mapStateToProps = (state) => ({
 
 const mapActionsToProps = {
     loginUser
-}
+};
 
 export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(login));
