@@ -82,93 +82,93 @@ export class signup extends Component {
     this.setState({
         [event.target.name]: event.target.value
     });
- }
+ };
 
- render() {
+    render() {
         const { classes } = this.props;
         const { errors, loading } = this.state;
         return (
             <Grid container className={classes.form}>
-                <Grid item sm />
-                <Grid item sm>
-                <Typography variant='h3' className={classes.pageTitle}>
-                    Sign Up
+              <Grid item sm />
+              <Grid item sm>
+                <Typography variant="h2" className={classes.pageTitle}>
+                  SignUp
                 </Typography>
                 <form noValidate onSubmit={this.handleSubmit}>
-                    <TextField 
-                    id='email' 
-                    name='email' 
-                    type='email' 
-                    label='Email' 
-                    className={classes.textField} 
+                  <TextField
+                    id="email"
+                    name="email"
+                    type="email"
+                    label="Email"
+                    className={classes.textField}
                     // helperText={errors.email}
                     // error={errors.email ? true : false}
-                    value={this.state.email} 
-                    onChange={this.handleChange} 
-                    fullWidth 
-                    />
-                    <TextField 
-                    id='password' 
-                    name='password' 
-                    type='password' 
-                    label='Password' 
-                    className={classes.textField} 
+                    value={this.state.email}
+                    onChange={this.handleChange}
+                    fullWidth
+                  />
+                  <TextField
+                    id="password"
+                    name="password"
+                    type="password"
+                    label="Password"
+                    className={classes.textField}
                     // helperText={errors.password}
                     // error={errors.password ? true : false}
-                    value={this.state.password} 
-                    onChange={this.handleChange} 
-                    fullWidth />
-
-                    <TextField 
-                    id='confirmPassword' 
-                    name='confirmPassword' 
-                    type='password' 
-                    label='ConfirmPassword' 
-                    className={classes.textField} 
+                    value={this.state.password}
+                    onChange={this.handleChange}
+                    fullWidth
+                  />
+                  <TextField
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    type="password"
+                    label="Confirm Password"
+                    className={classes.textField}
                     // helperText={errors.confirmPassword}
                     // error={errors.confirmPassword ? true : false}
-                    value={this.state.confirmPassword} 
-                    onChange={this.handleChange} 
-                    fullWidth />
-
-                    <TextField 
-                    id='handle' 
-                    name='handle' 
-                    type='text' 
-                    label='Handle' 
-                    className={classes.textField} 
+                    value={this.state.confirmPassword}
+                    onChange={this.handleChange}
+                    fullWidth
+                  />
+                  <TextField
+                    id="handle"
+                    name="handle"
+                    type="text"
+                    label="Handle"
+                    className={classes.textField}
                     // helperText={errors.handle}
                     // error={errors.handle ? true : false}
-                    value={this.state.handle} 
-                    onChange={this.handleChange} 
-                    fullWidth />
-
-                    {/* {errors.general && 
-                        <Typography variant='body2' className={classes.customError}>
-                            {errors.general}
-                        </Typography>
-                    } */}
-
-                    <Button 
-                    type='submit' 
-                    variant='contained' 
-                    color='default' 
-                    label='Sign Up' 
-                    className={classes.Button}
+                    value={this.state.handle}
+                    onChange={this.handleChange}
+                    fullWidth
+                  />
+                  {/* {errors.general && (
+                    <Typography variant="body2" className={classes.customError}>
+                      {errors.general}
+                    </Typography>
+                  )} */}
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="default"
+                    className={classes.button}
                     disabled={loading}
-                    >
-                        Sign Up
-                        {loading && (
-                            <CircularProgress size={25} className={classes.progress} /> 
-                        )}
-                    </Button>
-                    <br /> <br/>
-                    <small>Already have an account? Login <Link to='/login'>Here</Link></small>
+                  >
+                    SignUp
+                    {loading && (
+                      <CircularProgress size={30} className={classes.progress} />
+                    )}
+                  </Button>
+                  <br />
+                  <small>
+                    Already have an account ? Login <Link to="/login">here</Link>
+                  </small>
                 </form>
-                </Grid>
-                <Grid item sm />
+              </Grid>
+              <Grid item sm />
             </Grid>
-        )
+          );
     }
 }
 

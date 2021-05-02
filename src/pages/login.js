@@ -10,6 +10,9 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+import { connect } from 'react-redux';
+import { loginUser } from '../redux/actions/userActions';
+
 const styles = ({
     typography: {
         useNextVariants: true
@@ -50,28 +53,11 @@ export class login extends Component {
 
  handleSubmit = (event) => {
     event.preventDefault();
-    this.setState({
-        loading: true
-    });
     const userData = {
         email: this.state.email,
         password: this.state.password
-    }
-    axios.post('/login', userData)
-    .then( response => {
-        console.log(response.data);
-        localStorage.setItem('FBIdToken', `Bearer ${response.data.token}`);
-        this.setState({
-            loading: false
-        });
-        this.props.history.push('/');
-    })
-    .catch(err => {
-        this.setState({
-            error: err.response.data,
-            loading: false
-        })
-    })
+    };
+    this.props.loginUser(userData, this.props.history)
 };
 
  handleChange = (event) => {
@@ -81,8 +67,8 @@ export class login extends Component {
  }
 
  render() {
-        const { classes } = this.props;
-        const { errors, loading } = this.state;
+        const { classes, UI: {loading} } = this.props;
+        const { errors } = this.state;
         return (
             <Grid container className={classes.form}>
                 <Grid item sm />
@@ -145,7 +131,19 @@ export class login extends Component {
 }
 
 login.propTypes = {
-    classes: propTypes.object.isRequired
+    classes: propTypes.object.isRequired,
+    loginUser: propTypes.func.isRequired,
+    user: propTypes.object.isRequired,
+    UI: propTypes.object.isRequired
+};
+
+const mapStateToProps = (state) => ({
+    user: state.user,
+    UI: state.UI
+});
+
+const mapActionsToProps = {
+    loginUser
 }
 
-export default withStyles(styles)(login);
+export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(login));
