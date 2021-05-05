@@ -1,4 +1,4 @@
-import { SET_USER, SET_AUTHENTICATED, SET_UNAUTHENTICATED, LOADING_USER } from '../types';
+import { SET_USER, SET_AUTHENTICATED, SET_UNAUTHENTICATED, LOADING_USER, LIKE_PROJECT, UNLIKE_PROJECT } from '../types';
 
 const initialState = {
     authenticated: false,
@@ -22,12 +22,28 @@ export default (function(state = initialState, action) {
                 authenticated: true,
                 loading: false,
                 ...action.payload
-            }
+            };
         case LOADING_USER:
             return {
-                ... state,
+                ...state,
                 loading: true
-            }
+            };
+        case LIKE_PROJECT:
+            return {
+                ...state,
+                likes: [
+                    ...state.likes,
+                    {
+                        userHandle: state.credentials.handle,
+                        projectId: action.payload.projectId
+                    }
+                ]
+            };
+        case UNLIKE_PROJECT:
+            return {
+                ...state,
+                likes: state.likes.filter(like => like.projectId === action.payload.projectId)
+            };
         default: 
             return state;
     }

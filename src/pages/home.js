@@ -1,28 +1,26 @@
 import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
-import axios from 'axios';
+import propTypes from 'prop-types';
 
 import Project from '../components/Project';
 import Profile from '../components/Profile';
 
+import { connect } from 'react-redux';
+import { getProjects } from '../redux/actions/dataActions';
+
 class home extends Component {
-    state = {
-        projects: null
-    }
+    
   componentDidMount() {
-    axios.get('/projects')
-    .then(response => {
-        console.log(response.data)
-        this.setState({
-            projects: response.data
-        })
-    })
-    .catch(err => console.log(err));
+    this.props.getProjects();
   }
   render() {
-    let recentProjectsMarkup = this.state.projects ? (
-        this.state.projects.map((project) =>  <Project key={project.projectId} project={project}/>)
-    ) : <p>Loading...</p>
+    const { projects, loading } = this.props.data;
+    let recentProjectsMarkup = !loading ? (
+        projects.map((project) =>  
+        <Project key={project.projectId} project={project}/>)
+    ) : ( 
+      <p>Loading...</p>
+    );
     return (
       <Grid container spacing={10}>
         <Grid item sm={8} xs={12}>
@@ -36,4 +34,16 @@ class home extends Component {
   }
 }
 
-export default home;
+home.propTypes = {
+  getProjects: propTypes.func.isRequired,
+  data: propTypes.object.isRequired
+}
+
+const mapStateToProps = (state) => ({
+  data: state.data
+});
+
+export default connect(
+  mapStateToProps, 
+  { getProjects }
+)(home);
