@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import propTypes from 'prop-types';
 import MyButton from '../util/MyButton';
+import DeleteProject from './DeleteProject';
 
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -15,10 +16,11 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 
 import { connect } from 'react-redux';
-import { likeProject, unlikeProject } from '../redux/actions/dataActions';
+import { likeProject, unlikeProject } from '../redux/dataActions';
 
 const styles = {
     card: {
+        position: 'relative',
         display: 'flex',
         marginBottom: 20
     },
@@ -61,7 +63,7 @@ export class Project extends Component {
                 commentCount 
             },
             user: 
-                { authenticated }
+                { authenticated, credentials: { handle } }
         } = this.props;
         const likeButton = !authentiated ? (
             <MyButton tip="Like">
@@ -79,6 +81,9 @@ export class Project extends Component {
                 <FavoriteBorder color="primary" />
             </MyButton>
         );
+        const deleteButton = authenticated && userHandle === handle ? (
+            <DeleteProject projectId={projectId}/>
+        ) : null
         return (
             <Card className={classes.card}>
                 <CardMedia 
@@ -88,6 +93,7 @@ export class Project extends Component {
                     <Typography variant="h5" component={Link} to={`/users/${userHandle}`} color="primary" >
                         {userHandle} 
                     </Typography>
+                    <DeleteProject />
                     <Typography variant="body2" color="textSecondary">
                         {dayjs(createdAt).fromNow()}
                     </Typography>

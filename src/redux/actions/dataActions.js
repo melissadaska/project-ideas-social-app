@@ -1,4 +1,4 @@
-import { SET_PROJECTS, LOADING_DATA, LIKE_PROJECT, UNLIKE_PROJECT } from '../types';
+import { SET_PROJECTS, LOADING_DATA, LIKE_PROJECT, UNLIKE_PROJECT, DELETE_PROJECT } from '../types';
 import axios from 'axios';
 
 // get all projects
@@ -41,4 +41,12 @@ export const unlikeProject = (projectId) => dispatch => {
             })
         })
         .catch(err => console.log(err));
+}
+
+export const deleteProject = (projectId) => (dispatch) => {
+    axios.delete(`/project/${projectId}`)
+    .then(() => {
+        dispatch({ type: DELETE_PROJECT, payload: projectId })
+    })
+    .catch(err=> console.log(err));
 }

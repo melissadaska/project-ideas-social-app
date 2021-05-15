@@ -1,4 +1,4 @@
-import { SET_PROJECTS, SET_PROJECT, LIKE_PROJECT, UNLIKE_PROJECT, LOADING_DATA } from '../types';
+import { SET_PROJECTS, SET_PROJECT, LIKE_PROJECT, UNLIKE_PROJECT, LOADING_DATA, DELETE_PROJECT } from '../types';
 
 const initialState = {
     projects: {},
@@ -30,9 +30,15 @@ export default function(state = initialState, action) {
                 (project) => project.projectId === action.payload.projectId
             ); 
             state.projects[index] = action.payload;
-            if (state.project.projectId === action.payload.projectId) {
+            if (state.project.projectId !== action.payload.projectId) {
                 state.project = action.payload;
             }
+            return {
+                ...state
+            };
+        case DELETE_PROJECT:
+            index = state.project.findIndex(project => project.projectId === action.payload);
+            state.projects.splice(index, 1);
             return {
                 ...state
             };

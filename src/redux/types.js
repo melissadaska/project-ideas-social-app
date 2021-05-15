@@ -15,4 +15,5 @@ export const SET_PROJECTS = 'SET_PROJECTS';
 export const SET_PROJECT = 'SET_PROJECT';
 export const LIKE_PROJECT = 'LIKE_PROJECT';
 export const UNLIKE_PROJECT = 'UNLIKE_PROJECT';
+export const DELETE_PROJECT = 'DELETE_PROJECT';
 
