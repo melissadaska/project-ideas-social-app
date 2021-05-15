@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import MyButton from '../util/MyButton';
-// import PostProject from '../project/PostProject';
+import PostProject from '../project/PostProject';
 // import Notifications from './Notifications';
 
 // MUI 
@@ -22,7 +22,7 @@ class Navbar extends Component {
         <Toolbar className="nav-container">
           {authenticated ? (
             <Fragment>
-              {/* <PostProject/> */}
+              <PostProject/>
               <Link to="/">
                 <MyButton tip="Home">
                   <HomeIcon />

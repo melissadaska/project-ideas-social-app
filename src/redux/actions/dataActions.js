@@ -1,4 +1,4 @@
-import { SET_PROJECTS, LOADING_DATA, LIKE_PROJECT, UNLIKE_PROJECT, DELETE_PROJECT } from '../types';
+import { SET_PROJECTS, LOADING_DATA, LIKE_PROJECT, UNLIKE_PROJECT, DELETE_PROJECT, POST PROJECT, SET_ERRORS, CLEAR_ERRORS, LOADING_UI } from '../types';
 import axios from 'axios';
 
 // get all projects
@@ -17,6 +17,25 @@ export const getProjects = () => dispatch => {
                 payload: []
             })
         })
+}
+
+//Post a project
+export const postProject = (newProject) => {
+    dispatch({ type: LOADING_UI });
+    axios.post('/project', newProject)
+    .then(response => {
+        dispatch({
+            type: POST_PROJECT,
+            payload: response.data
+        });
+        dispatch({ type: CLEAR_ERRORS });
+    })
+    .catch(err => {
+        dispatch({
+            type: SET_ERRORS,
+            payload: err.response.data
+        })
+    })
 }
 
 // like a project
