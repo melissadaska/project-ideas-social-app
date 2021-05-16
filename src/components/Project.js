@@ -6,6 +6,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import propTypes from 'prop-types';
 import MyButton from '../util/MyButton';
 import DeleteProject from './DeleteProject';
+import ProjectDialog from './ProjectDialog.js';
 
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -108,6 +109,7 @@ export class Project extends Component {
                         <ChatIcon color="primary" />
                     </MyButton>
                     <span>{commentCount} Comments</span>
+                    <ProjectDialog projectId={projectId} userHandle={userHandle} />
                 </CardContent>
             </Card>
         )

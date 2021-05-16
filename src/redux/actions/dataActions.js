@@ -1,4 +1,4 @@
-import { SET_PROJECTS, LOADING_DATA, LIKE_PROJECT, UNLIKE_PROJECT, DELETE_PROJECT, POST PROJECT, SET_ERRORS, CLEAR_ERRORS, LOADING_UI } from '../types';
+import { SET_PROJECTS, LOADING_DATA, LIKE_PROJECT, UNLIKE_PROJECT, DELETE_PROJECT, POST_PROJECT, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_PROJECT, STOP_LOADING_UI } from '../types';
 import axios from 'axios';
 
 // get all projects
@@ -17,9 +17,23 @@ export const getProjects = () => dispatch => {
                 payload: []
             })
         })
-}
+};
 
-//Post a project
+// get a project
+export const getProject = (projectId) => dispatch => {
+    dispatch({ type: LOADING_UI });
+    axios.get(`/project/${projectId}`)
+        .then(response => {
+            dispatch({
+                type: SET_PROJECT,
+                payload: response.data
+            });
+            dispatch({ type: STOP_LOADING_UI })
+        })
+        .catch(err => console.log(err));
+};
+
+// post a project
 export const postProject = (newProject) => {
     dispatch({ type: LOADING_UI });
     axios.post('/project', newProject)
@@ -36,7 +50,7 @@ export const postProject = (newProject) => {
             payload: err.response.data
         })
     })
-}
+};
 
 // like a project
 export const likeProject = (projectId) => dispatch => {
@@ -48,7 +62,7 @@ export const likeProject = (projectId) => dispatch => {
             })
         })
         .catch(err => console.log(err));
-}
+};
 
 // unlike a project
 export const unlikeProject = (projectId) => dispatch => {
@@ -60,7 +74,7 @@ export const unlikeProject = (projectId) => dispatch => {
             })
         })
         .catch(err => console.log(err));
-}
+};
 
 export const deleteProject = (projectId) => (dispatch) => {
     axios.delete(`/project/${projectId}`)
@@ -68,4 +82,9 @@ export const deleteProject = (projectId) => (dispatch) => {
         dispatch({ type: DELETE_PROJECT, payload: projectId })
     })
     .catch(err=> console.log(err));
-}
+};
+
+// clear errors
+export const clearErrors = () => dispatch => {
+    dispatch({ type: CLEAR_ERRORS })
+};

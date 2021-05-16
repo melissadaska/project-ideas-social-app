@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
+import propTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import MyButton from '../util/MyButton';
 
@@ -15,7 +15,7 @@ import CloseIcon from '@material-ui/icons/close';
 
 // Redux 
 import { connect } from 'react-redux';
-import { postProject } from '../redux/actions/userActions';
+import { postProject, clearErrors } from '../redux/actions/dataActions';
 import classes from '*.module.css';
 
 const styles = {
@@ -54,16 +54,18 @@ const styles = {
         padding: 25,
         objectFit: 'cover'
     },
-    subnitButton: {
-        position: relative
+    submitButton: {
+        position: 'relative',
+        float: 'right',
+        marginTop: 10
     },
     progressSpinner: {
         position: 'absolute'
     },
     closeButton: {
         position: 'absolute',
-        left: '90%',
-        top: '10%'
+        left: '91%',
+        top: '6%'
     }
 }
 
@@ -80,14 +82,14 @@ class PostProject extends Component {
             });
         };
         if(!nextProps.UI.errors && !nextProps.UI.loading){
-            this.setState({ body: '' });
-            this.handleClose();
+            this.setState({ body: '', open: false, errors: {} });
         }
     }
     handleOpen = () => {
         this.setState({ open: true })
     };
     handleClose = () => {
+        this.props.clearErrors();
         this.setState({ open: false })
     };
     handleChange = (event) => {
@@ -145,6 +147,7 @@ class PostProject extends Component {
 
 PostProject.propTypes = {
     postProject: propTypes.func.isRequred,
+    clearErrors: propTypes.func.isRequred,
     UI: propTypes.object.isRequired
 };
 
@@ -152,4 +155,7 @@ const mapStateToProps = (state) => ({
     UI: state.UI
 });
 
-export default connect((mapStateToProps, { postProject }))(withStyles(styles)(PostProject))
+export default connect(
+    mapStateToProps, 
+    { postProject, clearErrors }
+)(withStyles(styles)(PostProject));
