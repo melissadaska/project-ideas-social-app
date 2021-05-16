@@ -64,12 +64,15 @@ class DeleteProject extends Component {
             </Fragment>
         )
     }
-}
+};
 
 DeleteProject.propTypes = {
-    DELETE_PROJECT: propTypes.func.isRequired,
+    deleteProject: propTypes.func.isRequired,
     classes: propTypes.object.isRequired,
     projectId: propTypes.string.isRequired
-}
+};
 
-export default connect(null, { deleteProject })(withStyles(styles))(DeleteProject)
+export default connect(
+    null, 
+    { deleteProject }
+)(withStyles(styles)(DeleteProject));

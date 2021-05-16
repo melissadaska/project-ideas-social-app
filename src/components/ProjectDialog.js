@@ -11,10 +11,10 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/Typography';
+import Typography from '@material-ui/core/Typography';
 
 //Icons
-import CloseIcon from '@material-ui/icons/close';
+import CloseIcon from '@material-ui/icons/Close';
 import UnfoldMore from '@material-ui/icons/UnfoldMore';
 import ChatIcon from '@material-ui/icons/Chat';
 
@@ -22,46 +22,8 @@ import ChatIcon from '@material-ui/icons/Chat';
 import { connect } from 'react-redux';
 import { getProject } from '../redux/actions/dataActions';
 
-const styles = ({
-    typography: {
-        useNextVariants: true
-    },
-    form: {
-        textAlign: 'center'
-    },
-    pageTitle: {
-        margin: '10px auto 10px auto'
-    },
-    textField: {
-        margin: '10px auto 10px auto'
-      },
-    Button: {
-        marginTop: 20,
-        position: 'relative'
-    },
-    customError: {
-        color: 'red',
-        fontSize: '0.8rem',
-        marginTop: 10
-    },
-    progress: {
-        position: 'absolute'
-    },
-    card: {
-        display: 'flex',
-        marginBottom: 20
-    },
-    image: {
-        minWidth: 200
-    },
-    content: {
-        padding: 25,
-        objectFit: 'cover'
-    },
-    invisibleSeperator: {
-        border: 'none',
-        maring: 4
-    },
+const styles = (theme) => ({
+    ...theme.spreadThis,
     profileImage: {
         maxWidth: 200,
         height: 200,
@@ -82,8 +44,8 @@ const styles = ({
     spinnerDiv: {
         textAlign: 'center',
         marginTop: 50,
-        margionBottom: 50
-    }
+        marginBottom: 50
+    } 
 });
 
 class ProjectDialog extends Component {

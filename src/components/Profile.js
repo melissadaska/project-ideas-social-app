@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
@@ -13,96 +13,20 @@ import Typography from '@material-ui/core/Typography';
 import MUILink from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
 
-// Icons
+// icons
 import LocationOn from '@material-ui/icons/LocationOn';
 import LinkIcon from '@material-ui/icons/Link';
 import CalendarToday from '@material-ui/icons/CalendarToday';
 import EditIcon from '@material-ui/icons/Edit';
 import KeyboardReturn from '@material-ui/icons/KeyboardReturn';
 
-//Redux
+// redux
 import { connect } from 'react-redux';
 import { logoutUser, uploadImage } from '../redux/actions/userActions';
 
-const styles = {
-    typography: {
-        useNextVariants: true
-    },
-    form: {
-        textAlign: 'center'
-    },
-    pageTitle: {
-        margin: '10px auto 10px auto'
-    },
-    textField: {
-        margin: '10px auto 10px auto'
-      },
-    Button: {
-        marginTop: 20,
-        position: 'relative'
-    },
-    customError: {
-        color: 'red',
-        fontSize: '0.8rem',
-        marginTop: 10
-    },
-    progress: {
-        position: 'absolute'
-    },
-    card: {
-        display: 'flex',
-        marginBottom: 20
-    },
-    image: {
-        minWidth: 200
-    },
-    content: {
-        padding: 25,
-        objectFit: 'cover'
-    },
-    profile: {
-        '& .image-wrapper': {
-        textAlign: 'center',
-        position: 'relative',
-          '& button': {
-            position: 'absolute',
-            top: '80%',
-            left: '70%'
-            }
-        },
-        '& .profile-image': {
-          width: 200,
-          height: 200,
-          objectFit: 'cover',
-          maxWidth: '100%',
-          borderRadius: '50%'
-        },
-        '& .profile-details': {
-          textAlign: 'center',
-          '& span, svg': {
-            verticalAlign: 'middle'
-        },
-          '& a': {
-            color: '#00bcd4'
-          }
-        },
-        '& hr': {
-          border: 'none',
-          margin: '0 0 10px 0'
-        },
-        '& svg.button': {
-          '&:hover': {
-            cursor: 'pointer'
-          }
-        }
-    },
-    buttons: {
-        textAlign: 'center',
-        '& a': {
-          margin: '20px 10px'
-        }
-    }
-};
+const styles = (theme) => ({
+   ...theme.spreadThis
+});
 
 class Profile extends Component {
   handleImageChange = (event) => {
@@ -226,10 +150,10 @@ const mapStateToProps = (state) => ({
 const mapActionsToProps = { logoutUser, uploadImage };
 
 Profile.propTypes = {
-  logoutUser: propTypes.func.isRequired,
-  uploadImage: propTypes.func.isRequired,
-  user: propTypes.object.isRequired,
-  classes: propTypes.object.isRequired
+  logoutUser: PropTypes.func.isRequired,
+  uploadImage: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default connect(

@@ -3,18 +3,22 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import MyButton from '../util/MyButton';
 import DeleteProject from './DeleteProject';
 import ProjectDialog from './ProjectDialog.js';
 import LikeButton from './LikeButton';
 
+// MUI
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
+
+// icons
 import ChatIcon from '@material-ui/icons/Chat';
 
+// redux
 import { connect } from 'react-redux';
 
 const styles = {
@@ -30,11 +34,11 @@ const styles = {
         padding: 25,
         objectFit: 'cover'
     }
-}
+};
 
-export class Project extends Component {
+class Project extends Component {
     render() {
-        dayjs.extend(relativeTime)
+        dayjs.extend(relativeTime);
         const { 
             classes, 
             project: { 
@@ -46,52 +50,61 @@ export class Project extends Component {
                 likeCount, 
                 commentCount 
             },
-            user: 
-                { authenticated, credentials: { handle } }
+            user: { 
+                authenticated, 
+                credentials: { handle } 
+            }
         } = this.props;
 
-        const deleteButton = authenticated && userHandle === handle ? (
-            <DeleteProject projectId={projectId}/>
+        const deleteButton = 
+            authenticated && userHandle === handle ? (
+            <DeleteProject projectId={projectId} />
         ) : null
         return (
             <Card className={classes.card}>
                 <CardMedia 
-                image = {userImage} 
-                title="Profile image" className={classes.image}/>
+                    image = {userImage} 
+                    title="Profile image" 
+                    className={classes.image}/>
                 <CardContent className={classes.content}>
-                    <Typography variant="h5" component={Link} to={`/users/${userHandle}`} color="primary" >
+                    <Typography 
+                        variant="h5" 
+                        component={Link} to={`/users/${userHandle}`} 
+                        color="primary" 
+                    >
                         {userHandle} 
                     </Typography>
-                    <DeleteProject />
+                    {deleteButton}
                     <Typography variant="body2" color="textSecondary">
                         {dayjs(createdAt).fromNow()}
                     </Typography>
-                    <Typography variant="body1">
-                        {body}
-                    </Typography>
+                    <Typography variant="body1">{body}</Typography>
                     <LikeButton projectId={projectId} />
-                    <span>
-                        {likeCount} Likes 
-                    </span>
+                    <span>{likeCount} Likes </span>
                     <MyButton tip = "comments">
                         <ChatIcon color="primary" />
                     </MyButton>
-                    <span>{commentCount} Comments</span>
-                    <ProjectDialog projectId={projectId} userHandle={userHandle} />
+                    <span>{commentCount} comments</span>
+                    <ProjectDialog 
+                        projectId={projectId} 
+                        userHandle={userHandle} 
+                        openDialog={this.props.openDialog}
+                    />  
                 </CardContent>
             </Card>
-        )
+        );
     }
 }
 
 Project.propTypes = {
-    user: propTypes.func.isRequired,
-    project: propTypes.func.isRequired,
-    classes: propTypes.func.isRequired,
-}
+    // user: PropTypes.func.isRequired,
+    project: PropTypes.func.isRequired,
+    classes: PropTypes.func.isRequired,
+    // openDialog: PropTypes.bool
+};
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
     user: state.user
-})
+});
 
 export default connect(mapStateToProps)(withStyles(styles)(Project));

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import MyButton from '../util/MyButton';
-import PostProject from '../project/PostProject';
+import PostProject from './PostProject';
 // import Notifications from './Notifications';
 
 // MUI 

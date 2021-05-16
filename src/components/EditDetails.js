@@ -18,46 +18,12 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 // Icons
 import EditIcon from '@material-ui/icons/Edit';
 
-const styles = {
-    typography: {
-        useNextVariants: true
-    },
-    form: {
-        textAlign: 'center'
-    },
-    pageTitle: {
-        margin: '10px auto 10px auto'
-    },
-    textField: {
-        margin: '10px auto 10px auto'
-    },
-    Button: {
-        marginTop: 20,
-        position: 'relative'
-    },
-    customError: {
-        color: 'red',
-        fontSize: '0.8rem',
-        marginTop: 10
-    },
-    progress: {
-        position: 'absolute'
-    },
+const styles = (theme) => ({
+    ...theme.spreadThis,
     button: {
-        float: 'right'
-    },
-    card: {
-        display: 'flex',
-        marginBottom: 20
-    },
-    image: {
-        minWidth: 200
-    },
-    content: {
-        padding: 25,
-        objectFit: 'cover'
+      float: 'right'
     }
-};
+});
 
 class EditDetails extends Component {
   state = {

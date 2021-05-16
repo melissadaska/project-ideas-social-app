@@ -1,40 +1,54 @@
-import { SET_PROJECTS, LOADING_DATA, LIKE_PROJECT, UNLIKE_PROJECT, DELETE_PROJECT, POST_PROJECT, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_PROJECT, STOP_LOADING_UI } from '../types';
+import { 
+    SET_PROJECTS, 
+    LOADING_DATA, 
+    LIKE_PROJECT, 
+    UNLIKE_PROJECT, 
+    DELETE_PROJECT, 
+    POST_PROJECT, 
+    SET_ERRORS, 
+    CLEAR_ERRORS, 
+    LOADING_UI, 
+    SET_PROJECT, 
+    STOP_LOADING_UI 
+} from '../types';
 import axios from 'axios';
 
 // get all projects
-export const getProjects = () => dispatch => {
+export const getProjects = () => (dispatch) => {
     dispatch({ type: LOADING_DATA });
-    axios.get('/projects')
-        .then(response => {
+    axios
+        .get('/projects')
+        .then((response) => {
             dispatch({
                 type: SET_PROJECTS,
                 payload: response.data
-            })
+            });
         })
-        .catch(err =>  {
+        .catch((err) =>  {
             dispatch({
                 type: SET_PROJECTS,
                 payload: []
-            })
-        })
+            });
+        });
 };
 
 // get a project
-export const getProject = (projectId) => dispatch => {
+export const getProject = (projectId) => (dispatch) => {
     dispatch({ type: LOADING_UI });
-    axios.get(`/project/${projectId}`)
-        .then(response => {
+    axios
+        .get(`/project/${projectId}`)
+        .then((response) => {
             dispatch({
                 type: SET_PROJECT,
                 payload: response.data
             });
             dispatch({ type: STOP_LOADING_UI })
         })
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
 };
 
 // post a project
-export const postProject = (newProject) => {
+export const postProject = (newProject) => dispatch => {
     dispatch({ type: LOADING_UI });
     axios.post('/project', newProject)
     .then(response => {
