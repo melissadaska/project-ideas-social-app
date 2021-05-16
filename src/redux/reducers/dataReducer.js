@@ -30,7 +30,7 @@ export default function(state = initialState, action) {
                 (project) => project.projectId === action.payload.projectId
             ); 
             state.projects[index] = action.payload;
-            if (state.project.projectId !== action.payload.projectId) {
+            if (state.project.projectId === action.payload.projectId) {
                 state.project = action.payload;
             }
             return {
@@ -49,7 +49,7 @@ export default function(state = initialState, action) {
                     action.payload,
                     ...state.projects
                 ]
-            }
+            };
         default: 
             return state;
     }

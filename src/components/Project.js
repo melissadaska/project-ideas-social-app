@@ -7,17 +7,15 @@ import propTypes from 'prop-types';
 import MyButton from '../util/MyButton';
 import DeleteProject from './DeleteProject';
 import ProjectDialog from './ProjectDialog.js';
+import LikeButton from './LikeButton';
 
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import ChatIcon from '@material-ui/icons/Chat';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 
 import { connect } from 'react-redux';
-import { likeProject, unlikeProject } from '../redux/dataActions';
 
 const styles = {
     card: {
@@ -35,21 +33,6 @@ const styles = {
 }
 
 export class Project extends Component {
-    likedProject = () => {
-        if (
-            this.props.user.likes && this.props.user.likes.find(
-                (like) => like.projectId === this.props.project.projectId
-            )
-        )
-        return true;
-        else return false;
-    };
-    likeProject = () => {
-        this.props.likeProject(this.props.project.projectId);
-    }
-    unlikeProject = () => {
-        this.props.unlikeProject(this.props.project.projectId);
-    }
     render() {
         dayjs.extend(relativeTime)
         const { 
@@ -66,22 +49,7 @@ export class Project extends Component {
             user: 
                 { authenticated, credentials: { handle } }
         } = this.props;
-        const likeButton = !authentiated ? (
-            <MyButton tip="Like">
-                <Link to="/login">
-                    <FavoriteBorder color="primary" />
-                </Link>
-            </MyButton>
-        ) : 
-            this.likedProject() ? (
-                <MyButton tip="Undo like" onClick={this.unlikeProject}>
-                    <FavoriteIcon color="primary" />
-                </MyButton>
-        ) : (
-            <MyButton tip="Undo like" onClick={this.likeProject}>
-                <FavoriteBorder color="primary" />
-            </MyButton>
-        );
+
         const deleteButton = authenticated && userHandle === handle ? (
             <DeleteProject projectId={projectId}/>
         ) : null
@@ -101,7 +69,7 @@ export class Project extends Component {
                     <Typography variant="body1">
                         {body}
                     </Typography>
-                    { likeButton }
+                    <LikeButton projectId={projectId} />
                     <span>
                         {likeCount} Likes 
                     </span>
@@ -117,8 +85,6 @@ export class Project extends Component {
 }
 
 Project.propTypes = {
-    likeProject: propTypes.func.isRequired,
-    unlikeProject: propTypes.func.isRequired,
     user: propTypes.func.isRequired,
     project: propTypes.func.isRequired,
     classes: propTypes.func.isRequired,
@@ -128,9 +94,4 @@ const mapStateToProps = state => ({
     user: state.user
 })
 
-const mapActionsToProps = {
-    likeProject,
-    unlikeProject
-}
-
-export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(Project));
+export default connect(mapStateToProps)(withStyles(styles)(Project));
