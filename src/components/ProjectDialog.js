@@ -22,7 +22,7 @@ import ChatIcon from '@material-ui/icons/Chat';
 
 //Redux
 import { connect } from 'react-redux';
-import { getProject } from '../redux/actions/dataActions';
+import { getProject, clearErrors } from '../redux/actions/dataActions';
 
 const styles = (theme) => ({
     ...theme.spreadThis,

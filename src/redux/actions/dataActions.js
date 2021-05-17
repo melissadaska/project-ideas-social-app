@@ -117,7 +117,25 @@ export const deleteProject = (projectId) => (dispatch) => {
     .catch(err=> console.log(err));
 };
 
+// get user data
+export const getUserData = (userHandle) => dispatch => {
+    dispatch ({ type: LOADING_DATA});
+    axios.get(`/user/${userHandle}`)
+    .then(response => {
+        dispatch({
+            type: SET_PROJECTS,
+            payload: response.data.projects
+        });
+    })
+    .catch(err => {
+        dispatch({
+            type: SET_PROJECTS,
+            payload: null
+        });
+    });
+}
+
 // clear errors
-export const clearErrors = () => dispatch => {
-    dispatch({ type: CLEAR_ERRORS })
+export const clearErrors = () => (dispatch) => {
+    dispatch({ type: CLEAR_ERRORS });
 };

@@ -20,7 +20,7 @@ class CommentForm extends Component {
     state = {
         body: '',
         errors: {}
-    }
+    } 
 
     componentWillReceiveProps(nextProps){
         if(nextProps.UI.errors){
