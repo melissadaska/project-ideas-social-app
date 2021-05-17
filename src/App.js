@@ -166,7 +166,8 @@ class App extends Component {
                 <Route exact path="/" component={home} />
                 <AuthRoute exact path="/login" component={login} />
                 <AuthRoute exact path="/signup" component={signup} />
-                <Route exact patch='/users/:handle' component={user} />
+                <Route exact path='/users/:handle' component={user} />
+                <Rout exact path='/users/:handle/project/:projectId' component={user} />
               </Switch>
             </div>
           </Router>

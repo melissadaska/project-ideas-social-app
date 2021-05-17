@@ -44,6 +44,11 @@ export default (function(state = initialState, action) {
                 ...state,
                 likes: state.likes.filter(like => like.projectId === action.payload.projectId)
             };
+        case MARK_NOTIFICATIONS_READ:
+            state.notifications.forEach(not => not.read = true);
+            return{
+                ... state
+            };
         default: 
             return state;
     }

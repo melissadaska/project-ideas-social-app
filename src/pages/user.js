@@ -10,10 +10,15 @@ import { getUserData } from '../redux/actions/dataActions';
 
 class user extends Component {
     state = {
-        profile: null
-    }
+        profile: null,
+        projectIdParam: null
+    };
     componentDidMount(){
         const handle = this.props.match.params.handle;
+        const projectId = this.props.match.params.projectId;
+
+    if(projectId) this.setState({ projectIdParam: projectId });
+
         this.props.getUserData(handle);
         axios.get(`/user/${handle}`)
         .then (response => {
@@ -25,12 +30,20 @@ class user extends Component {
     }
     render() {
         const { projects, loading } = this.props.data;
+        const { projectIdParam } = this.state;
+
         const projectMarkup = loading ? (
             <p>loading data...</p>
         ) : projects === null ? (
             <p>No projects from this user</p>
-        ) : (
+        ) : !projectIdParam ? (
             projects.map(project => <Project key={project.projectId} project={project} />)
+        ) : (
+            projects.map(project => {
+                if(project.projectId !== projectIdParam)
+                return <Project key={project.projectId} project={project} />
+                else return <Project key={project.projectId} project={project} openDialog />
+            })
         )
         return (
             <Grid container spacing={10}>

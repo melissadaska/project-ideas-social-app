@@ -100,7 +100,7 @@ Project.propTypes = {
     // user: PropTypes.func.isRequired,
     project: PropTypes.func.isRequired,
     classes: PropTypes.func.isRequired,
-    // openDialog: PropTypes.bool
+    openDialog: PropTypes.bool
 };
 
 const mapStateToProps = (state) => ({

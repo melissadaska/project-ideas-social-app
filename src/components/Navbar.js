@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import MyButton from '../util/MyButton';
 import PostProject from './PostProject';
-// import Notifications from './Notifications';
+import Notifications from './Notifications';
 
 // MUI 
 import AppBar from '@material-ui/core/AppBar';
@@ -28,7 +28,7 @@ class Navbar extends Component {
                   <HomeIcon />
                 </MyButton>
               </Link>
-              {/* <Notifications /> */}
+              <Notifications />
             </Fragment>
           ) : (
             <Fragment>
