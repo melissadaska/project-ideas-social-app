@@ -87,7 +87,7 @@ class EditDetails extends Component {
             <form>
               <TextField
                 name="bio"
-                tpye="text"
+                type="text"
                 label="Bio"
                 multiline
                 rows="3"
@@ -99,7 +99,7 @@ class EditDetails extends Component {
               />
               <TextField
                 name="website"
-                tpye="text"
+                type="text"
                 label="Website"
                 placeholder="Your personal/professinal website"
                 className={classes.textField}
@@ -109,7 +109,7 @@ class EditDetails extends Component {
               />
               <TextField
                 name="location"
-                tpye="text"
+                type="text"
                 label="Location"
                 placeholder="Where you live"
                 className={classes.textField}

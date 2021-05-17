@@ -1,8 +1,10 @@
 import React, { Component, Fragment } from 'react';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import MyButton from '../util/MyButton';
 import LikeButton from './LikeButton';
+import Comments from './Comments';
+import CommentForm from './CommentForm';
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 
@@ -58,6 +60,7 @@ class ProjectDialog extends Component {
     };
     handleClose = () => {
         this.setState({ open: false });
+        this.props.clearErrors();
     }; 
     render() {
         const { 
@@ -69,7 +72,8 @@ class ProjectDialog extends Component {
                 likeCount, 
                 commentCount, 
                 userImage, 
-                userHandle
+                userHandle,
+                comments
             }, UI: {loading} 
         } = this.props;
 
@@ -106,6 +110,9 @@ class ProjectDialog extends Component {
                     </MyButton>
                     <span>{commentCount} comments</span>
                 </Grid>
+                <hr className={classes.visibleSeperator} />
+                <CommentForm projectId={projectId} />
+                <Comments comments={comments} />
             </Grid>
         )
 
@@ -137,11 +144,12 @@ class ProjectDialog extends Component {
 }
 
 ProjectDialog.propTypes = {
-    getProject: propTypes.func.isRequired,
-    projectId: propTypes.string.isRequired,
-    userHandle: propTypes.string.isRequired,
-    project: propTypes.object.isRequired,
-    UI: propTypes.object.isRequired,
+    clearErrors: PropTypes.func.isRequired,
+    getProject: PropTypes.func.isRequired,
+    projectId: PropTypes.string.isRequired,
+    userHandle: PropTypes.string.isRequired,
+    project: PropTypes.object.isRequired,
+    UI: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -150,7 +158,8 @@ const mapStateToProps = state => ({
 })
 
 const mapActionsToProps = {
-    getProject
+    getProject,
+    clearErrors
 };
 
 export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(ProjectDialog));

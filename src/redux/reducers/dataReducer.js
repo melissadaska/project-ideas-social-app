@@ -5,7 +5,8 @@ import {
     UNLIKE_PROJECT, 
     LOADING_DATA, 
     DELETE_PROJECT, 
-    POST_PROJECT 
+    POST_PROJECT,
+    SUBMIT_COMMENT 
 } from '../types';
 
 const initialState = {
@@ -54,6 +55,14 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 projects: [action.payload, ...state.projects]
+            };
+        case SUBMIT_COMMENT:
+            return {
+                ...state,
+                project: {
+                    ...state.project,
+                    comments: [action.payload, ...state.project.comments]
+                }
             };
         default: 
             return state;

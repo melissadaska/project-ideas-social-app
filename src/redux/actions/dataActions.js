@@ -9,7 +9,8 @@ import {
     CLEAR_ERRORS, 
     LOADING_UI, 
     SET_PROJECT, 
-    STOP_LOADING_UI 
+    STOP_LOADING_UI,
+    SUBMIT_COMMENT 
 } from '../types';
 import axios from 'axios';
 
@@ -56,7 +57,7 @@ export const postProject = (newProject) => dispatch => {
             type: POST_PROJECT,
             payload: response.data
         });
-        dispatch({ type: CLEAR_ERRORS });
+        dispatch(clearErrors());
     })
     .catch(err => {
         dispatch({
@@ -89,6 +90,24 @@ export const unlikeProject = (projectId) => dispatch => {
         })
         .catch(err => console.log(err));
 };
+
+// submit a comment
+export const submitComment = (projectId, commentData) => (dispatch) => {
+    axios.post(`/project/${projectId}/comment`, commentData)
+    .then(response => {
+        dispatch({
+            type: SUBMIT_COMMENT,
+            payload: response.data
+        });
+        dispatch(clearErrors());
+    })
+    .catch(err => {
+        dispatch({
+            type: SET_ERRORS,
+            payload: err.response.data
+        })
+    })
+}
 
 export const deleteProject = (projectId) => (dispatch) => {
     axios.delete(`/project/${projectId}`)

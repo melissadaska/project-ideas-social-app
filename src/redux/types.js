@@ -18,5 +18,6 @@ export const LIKE_PROJECT = 'LIKE_PROJECT';
 export const UNLIKE_PROJECT = 'UNLIKE_PROJECT';
 export const DELETE_PROJECT = 'DELETE_PROJECT';
 export const POST_PROJECT = 'POST_PROJECT';
+export const SUBMIT_COMMENT = 'SUBMIT_COMMENT';
 
 
