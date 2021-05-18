@@ -6,53 +6,31 @@ import NoImg from '../images/no-img.png';
 // MUI
 import Paper from '@material-ui/core/Paper';
 
-// Icons
+// icons
 import LocationOn from '@material-ui/icons/LocationOn';
 import LinkIcon from '@material-ui/icons/Link';
 import CalendarToday from '@material-ui/icons/CalendarToday';
+import { ThemeProvider } from '@material-ui/styles';
 
 const styles = {
-  typography: {
-      useNextVariants: true
+  ...theme.spreadThis,
+  handle: {
+    height: 20,
+    backgroundColor: palette.primary.main,
+    width: 60,
+    margin: '0 auto 7px auto'
   },
-  form: {
-      textAlign: 'center'
-  },
-  pageTitle: {
-      margin: '10px auto 10px auto'
-  },
-  textField: {
-      margin: '10px auto 10px auto'
-  },
-  Button: {
-      marginTop: 20,
-      position: 'relative'
-  },
-  customError: {
-      color: 'red',
-      fontSize: '0.8rem',
-      marginTop: 10
-  },
-  progress: {
-      position: 'absolute'
-  },
-  // handle: {
-  //     height: 20,
-  //     backgroundColor: palette.primary.main,
-  //     width: 60,
-  //     margin: '0 auto 7px auto'
-  // },
   fullLine: {
-      height: 15,
-      backgroundColor: 'rgba(0,0,0,0.6)',
-      width: '100%',
-      marginBottom: 10
+    height: 15,
+    backgroundColor: 'rgba(0,0,0,0.6)',
+    width: '100%',
+    marginBottom: 10
   },
-    halfLine: {
-      height: 15,
-      backgroundColor: 'rgba(0,0,0,0.6)',
-      width: '50%',
-      marginBottom: 10
+  halfLine: {
+    height: 15,
+    backgroundColor: 'rgba(0,0,0,0.6)',
+    width: '50%',
+    marginBottom: 10
   },
   card: {
       display: 'flex',
@@ -62,8 +40,8 @@ const styles = {
       minWidth: 200
   },
   content: {
-      padding: 25,
-      objectFit: 'cover'
+    padding: 25,
+    objectFit: 'cover'
   }
 };
 

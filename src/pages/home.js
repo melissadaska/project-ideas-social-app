@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import Project from '../components/Project';
 import Profile from '../components/Profile';
-// import ProjectSkeleton from '../util/ProjectSkeleton';
+import ProjectSkeleton from '../components/ProjectSkeleton';
 
 import { connect } from 'react-redux';
 import { getProjects } from '../redux/actions/dataActions';
@@ -18,7 +18,7 @@ class home extends Component {
     let recentProjectsMarkup = !loading ? (
         projects.map((project) => <Project key={project.projectId} project={project} />)
     ) : ( 
-      <p>loading</p>
+      <ProjectSkeleton />
     );
     return (
       <Grid container spacing={10}>

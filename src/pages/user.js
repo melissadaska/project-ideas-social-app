@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import Project from '../components/Project';
+import ProjectSkeleton from '../components/ProjectSkeleton';
+import ProfileSkeleton from '../util/ProfileSkeleton';
 import StaticProfile from '../components/StaticProfile';
 import Grid from '@material-ui/core/Grid';
 
@@ -33,7 +35,7 @@ class user extends Component {
         const { projectIdParam } = this.state;
 
         const projectMarkup = loading ? (
-            <p>loading data...</p>
+            <ProjectSkeleton />
         ) : projects === null ? (
             <p>No projects from this user</p>
         ) : !projectIdParam ? (
@@ -52,7 +54,7 @@ class user extends Component {
             </Grid>
             <Grid item sm={4} xs={12}>
                 {this.state.profile === null ? (
-                    <p>Loading profile...</p>
+                    <ProfileSkeleton />
                 ) : (
                     <StaticProfile profile={this.state.profile} />
                 )}
