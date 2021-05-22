@@ -12,11 +12,11 @@ import LinkIcon from '@material-ui/icons/Link';
 import CalendarToday from '@material-ui/icons/CalendarToday';
 import { ThemeProvider } from '@material-ui/styles';
 
-const styles = {
+const styles = (theme) => ({
   ...theme.spreadThis,
   handle: {
     height: 20,
-    backgroundColor: palette.primary.main,
+    backgroundColor: '#00bcd4',
     width: 60,
     margin: '0 auto 7px auto'
   },
@@ -43,7 +43,7 @@ const styles = {
     padding: 25,
     objectFit: 'cover'
   }
-};
+});
 
 const ProfileSkeleton = (props) => {
   const { classes } = props;

@@ -5,12 +5,6 @@ import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import jwtDecode from 'jwt-decode';
 
-// redux
-import { Provider } from 'react-redux';
-import store from './redux/store';
-import { SET_AUTHENTICATED } from './redux/types';
-import { logoutUser, getUserData } from './redux/actions/userActions';
-
 // components
 import Navbar from './components/Navbar';
 import AuthRoute from './util/AuthRoute';
@@ -21,24 +15,13 @@ import login from './pages/login';
 import signup from './pages/signup';
 import user from './pages/user';
 
-import axios from 'axios';
+// redux
+import { Provider } from 'react-redux';
+import store from './redux/store';
+import { SET_AUTHENTICATED } from './redux/types';
+import { logoutUser, getUserData } from './redux/actions/userActions';
 
-// const theme = createMuiTheme({
-//   palette: {
-//     primary: {
-//       light: '#33c9dc',
-//       main: '#00bcd4',
-//       dark: '#008394',
-//       contrastText: '#fff'
-//     },
-//     secondary: {
-//       light: '#ff6333',
-//       main: '#ff3d00',
-//       dark: '#b22a00',
-//       contrastText: '#fff'
-//     }
-//   }
-// });
+import axios from 'axios';
 
 const theme = createMuiTheme({
   palette: {
@@ -167,7 +150,7 @@ class App extends Component {
                 <AuthRoute exact path="/login" component={login} />
                 <AuthRoute exact path="/signup" component={signup} />
                 <Route exact path='/users/:handle' component={user} />
-                <Rout exact path='/users/:handle/project/:projectId' component={user} />
+                <Route exact path='/users/:handle/project/:projectId' component={user} />
               </Switch>
             </div>
           </Router>
